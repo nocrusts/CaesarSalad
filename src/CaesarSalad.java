@@ -6,16 +6,23 @@ public class CaesarSalad {
 
 	public static String caesarShift(String plaintext, int n) { // This method DOES NOT PRESERVE CASE
 		// a - z = 97 - 122
-		plaintext = plaintext.toLowerCase();
+		// A - Z = 
 		String encString = "";
 		for (int i = 0; i < plaintext.length(); i ++) {
 			int currentCharAscii = plaintext.charAt(i);
-			if (!(currentCharAscii < 96)) {
+			if (!((currentCharAscii < 'a') && !(currentCharAscii > 'z'))) {
 				currentCharAscii += n;
-				if (currentCharAscii > 122) {
-					currentCharAscii = (i - 122) + 65; 
-				} else if (currentCharAscii < 61) {
-					currentCharAscii = 122 - (96 - i);
+				if (currentCharAscii > 'z') {
+					currentCharAscii = (i - 'z') + 65; 
+				} else if (currentCharAscii < 'a') {
+					currentCharAscii = 'z' - (96 - i);
+				}
+			} else if (!((currentCharAscii < 'A') && !(currentCharAscii > 'Z'))) {
+				currentCharAscii += n;
+				if (currentCharAscii > 'Z') {
+					currentCharAscii = (i - 'Z') + 65;
+				} else if (currentCharAscii < 'A') {
+					currentCharAscii = 'Z' - (64 - i);
 				}
 			}
 			encString += (char)(currentCharAscii);
@@ -24,7 +31,7 @@ public class CaesarSalad {
 	}
 	
 	public static void main(String args[]) {
-		String uncMessage = "1!@/blah ijoi32joir32";
+		String uncMessage = "1!@/blah testing ABDCE";
 		int shiftAmt = 5;
 		
 		String encMessage = caesarShift(uncMessage, shiftAmt);
