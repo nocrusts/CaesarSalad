@@ -11,16 +11,16 @@ public class CaesarSalad {
 			if (!((currentCharAscii < 'a') && !(currentCharAscii > 'z'))) {
 				currentCharAscii += n;
 				if (currentCharAscii > 'z') {
-					currentCharAscii = (i - 'z') + 65; 
+					currentCharAscii = (n - 'z') + 65; 
 				} else if (currentCharAscii < 'a') {
-					currentCharAscii = 'z' - (96 - i);
+					currentCharAscii = 'z' - (97 - n);
 				}
 			} else if (!((currentCharAscii < 'A') && !(currentCharAscii > 'Z'))) {
 				currentCharAscii += n;
 				if (currentCharAscii > 'Z') {
-					currentCharAscii = (i - 'Z') + 65;
+					currentCharAscii = (n - 'Z') + 65;
 				} else if (currentCharAscii < 'A') {
-					currentCharAscii = 'Z' - (64 - i);
+					currentCharAscii = 'Z' - (65 - n);
 				}
 			}
 			encString += (char)(currentCharAscii);
@@ -50,8 +50,8 @@ public class CaesarSalad {
 	}
 	
 	public static void main(String args[]) {
-		String uncMessage = "i am sleepying";
-		int shiftAmt = 3;
+		String uncMessage = "i am sleepy";
+		int shiftAmt = 1;
 		String key = "2428375565"; 
 		
 		String encMessage = caesarShift(uncMessage, shiftAmt);
