@@ -1,4 +1,4 @@
-//@author Curtis Lou with Anselme Sorin
+//@author Curtis Lou
 //Caesar Cipher encryption / decryption method.
 //@version May 24, 2022
 
@@ -11,16 +11,17 @@ public class CaesarSalad {
 			if (!((currentCharAscii < 'a') && !(currentCharAscii > 'z'))) {
 				currentCharAscii += n;
 				if (currentCharAscii > 'z') {
-					currentCharAscii = (n - 'z') + 65; 
+					currentCharAscii = (currentCharAscii - 'z') + 'a' - 1;
+					
 				} else if (currentCharAscii < 'a') {
-					currentCharAscii = 'z' - (97 - n);
+					currentCharAscii = 'z' - ('a' - currentCharAscii) + 1;
 				}
 			} else if (!((currentCharAscii < 'A') && !(currentCharAscii > 'Z'))) {
 				currentCharAscii += n;
 				if (currentCharAscii > 'Z') {
-					currentCharAscii = (n - 'Z') + 65;
+					currentCharAscii = (currentCharAscii - 'Z') + 'A' - 1;
 				} else if (currentCharAscii < 'A') {
-					currentCharAscii = 'Z' - (65 - n);
+					currentCharAscii = 'Z' - ('A' - currentCharAscii) + 1;
 				}
 			}
 			encString += (char)(currentCharAscii);
@@ -43,16 +44,29 @@ public class CaesarSalad {
 			int convertedSingleKey = key.charAt(keyIdx) - 48;
 			String tempString = "";
 			tempString += plaintext.charAt(i);
-			encString += caesarShift(tempString, convertedSingleKey);
-			keyIdx++;
+			if (!(plaintext.charAt(i) == 32)) {
+				if (mode == true) {
+					encString += caesarShift(tempString, convertedSingleKey);
+				} else {
+					encString += caesarShift(tempString, convertedSingleKey * -1);
+				}
+
+				keyIdx++;
+			} else {
+				encString += ' ';
+			}
+			
 		}
 		return encString;
 	}
 	
 	public static void main(String args[]) {
 		String uncMessage = "i am sleepy";
-		int shiftAmt = 1;
-		String key = "2428375565"; 
+		
+		// Configurable options
+		int shiftAmt = 8; // For single digit shifting
+		String key = "2428375565"; // For multidigit shifting (key mode)
+		//
 		
 		String encMessage = caesarShift(uncMessage, shiftAmt);
 		String decMessage = caesarShift(encMessage, shiftAmt * -1);
@@ -64,7 +78,7 @@ public class CaesarSalad {
 		System.out.println("Decrypted: " + decMessage);
 
 		String encMessageMulti = caesarShiftMultiDigit(uncMessage, key, true);
-		String decMessageMulti = caesarShiftMultiDigit(uncMessage, key, false);
+		String decMessageMulti = caesarShiftMultiDigit(encMessageMulti, key, false);
 
 		System.out.println();
 		System.out.println("Part 2:");
